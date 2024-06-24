@@ -53,7 +53,6 @@ service.interceptors.response.use(
 );
 
 export default service;
-
 export function request<T, R>(config: AxiosRequestConfig<T>): Promise<R> {
     console.log('发起请求:', config);
     return service(config) as unknown as Promise<R>;
