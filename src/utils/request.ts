@@ -1,41 +1,51 @@
-import axios, { AxiosRequestConfig, AxiosRequestHeaders, Method } from 'axios';
+import axios, { AxiosRequestConfig, AxiosRequestHeaders } from 'axios';
 
 const service = axios.create({
-    baseURL: import.meta.env.VITE_HOST,
+    baseURL: import.meta.env.VITE_HOST as string,
     timeout: 30000,
 });
 
+// 请求拦截器
 service.interceptors.request.use(
-    config => {
+    (config) => {
         // 鉴权Header
-        if (localStorage.getItem('PAOPAO_TOKEN')) {
-            (config.headers as any)['Authorization'] = 'Bearer ' + localStorage.getItem('PAOPAO_TOKEN');
+        const token = localStorage.getItem('PAOPAO_TOKEN');
+        if (token) {
+            if (!config.headers) {
+                config.headers = {} as AxiosRequestHeaders;
+            }
+            config.headers['Authorization'] = `Bearer ${token}`;
         }
 
         return config;
     },
-    error => {
+    (error) => {
+        console.error('Request error:', error);
         return Promise.reject(error);
     }
 );
 
+// 响应拦截器
 service.interceptors.response.use(
-    response => {
+    (response) => {
         const { data = {}, code = 0 } = response?.data || {};
         if (+code === 0) {
             return data || {};
         } else {
-            Promise.reject(response?.data || {});
+            console.error('Response error:', response?.data || {});
+            return Promise.reject(response?.data || {});
         }
     },
-    (error = {}) => {
-        const { response = {} } = error || {};
+    (error) => {
+        const { response } = error || {};
+        console.error('Response error:', response);
+
         // 重定向
-        if (+response?.status === 401) {
+        if (response?.status === 401) {
             localStorage.removeItem('PAOPAO_TOKEN');
 
-            if (response?.data.code !== 10005) {
-                window.$message.warning(response?.data.msg || '鉴权失败');
+            if (response?.data?.code !== 10005) {
+                window.$message.warning(response?.data?.msg || '鉴权失败');
             } else {
                 // 打开登录弹窗
                 window.$store.commit('triggerAuth', true);
