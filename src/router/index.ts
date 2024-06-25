@@ -107,6 +107,14 @@ const routes = [
     component: () => import("@/views/404.vue"),
   },
   {
+    path: "/auth",
+    name: "auth",
+    meta: {
+      title: "认证",
+    },
+    component: () => import("@/views/Auth.vue"),
+  },
+  {
     path: "/:pathMatch(.*)",
     redirect: "/404",
   },

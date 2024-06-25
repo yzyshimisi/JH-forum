@@ -68,6 +68,7 @@ import {
     WalletOutline,
     SettingsOutline,
     LogOutOutline,
+    IdCardOutline
 } from '@vicons/ionicons5';
 import { Hash } from '@vicons/tabler';
 import { getUnreadMsgCount } from '@/api/user';
@@ -169,7 +170,7 @@ const menuOptions = computed(() => {
             icon: () => h(PeopleOutline),
             href: '/contacts',
         });
-    }   
+    }
     if (store.state.profile.enableWallet) {
         options.push({
             label: '钱包',
@@ -184,6 +185,12 @@ const menuOptions = computed(() => {
         icon: () => h(SettingsOutline),
         href: '/setting',
     });
+    options.push({
+      label: '认证',
+      key: 'auth',
+      icon: () => h(IdCardOutline),
+      href: '/auth',
+    })
 
     return store.state.userInfo.id > 0
         ? options

@@ -40,8 +40,8 @@
                 </div>
                 <div v-if="store.state.desktopModelShow">
                     <n-list-item v-for="post in list" :key="post.id">
-                        <post-item :post="post" 
-                            :isOwner="store.state.userInfo.id == post.user_id" 
+                        <post-item :post="post"
+                            :isOwner="store.state.userInfo.id == post.user_id"
                             :addFollowAction="true"
                             @send-whisper="onSendWhisper"
                             @handle-follow-action="onHandleFollowAction"
@@ -51,7 +51,7 @@
                 <div v-else>
                     <n-list-item v-for="post in list" :key="post.id">
                         <mobile-post-item :post="post"
-                            :isOwner="store.state.userInfo.id == post.user_id" 
+                            :isOwner="store.state.userInfo.id == post.user_id"
                             :addFollowAction="true"
                             @send-whisper="onSendWhisper"
                             @handle-follow-action="onHandleFollowAction"
@@ -305,12 +305,12 @@ const loadContacts = () => {
         for (; i < list.length; i++) {
             let item: Item.IndexTrendsItem = list[i];
             barItems.push({
-                title: item.nickname, 
+                title: item.nickname,
                 style: 21,
                 username: item.username,
-                avatar: item.avatar, 
+                avatar: item.avatar,
                 show: item.is_fresh,
-            });   
+            });
         }
         if (barItems.length > 0) {
             slideBarList.value = slideBarList.value.concat(barItems);
@@ -492,13 +492,13 @@ watch(
 
 <style lang="less" scoped>
 
-.tiny-slide-bar .tiny-slide-bar__list > 
+.tiny-slide-bar .tiny-slide-bar__list >
 div.tiny-slide-bar__select .slide-bar-item .slide-bar-item-title {
     color: #18a058;
     opacity: 0.8;
 }
 
-.tiny-slide-bar .tiny-slide-bar__list > 
+.tiny-slide-bar .tiny-slide-bar__list >
 div:hover .slide-bar-item {
     cursor: pointer;
     .slide-bar-item-avatar {
@@ -555,13 +555,13 @@ div:hover .slide-bar-item {
     .skeleton-wrap {
         background-color: rgba(16, 16, 20, 0.75);
     }
-    .tiny-slide-bar .tiny-slide-bar__list > 
+    .tiny-slide-bar .tiny-slide-bar__list >
     div.tiny-slide-bar__select .slide-bar-item .slide-bar-item-title {
         color: #63e2b7;
         opacity: 0.8;
     }
 
-    .tiny-slide-bar .tiny-slide-bar__list > 
+    .tiny-slide-bar .tiny-slide-bar__list >
     div:hover .slide-bar-item .slide-bar-item-title {
         color: #63e2b7;
         opacity: 0.8;
